@@ -9,9 +9,13 @@ router = APIRouter(
     tags=["record"]
 )
 
-@router.post("/all")
-async def save_record(login: str, token:str, record: UploadFile = File(...),  session: AsyncSession = Depends(get_async_session)) -> str:
+@router.post("/record")
+async def save_record(login: str, token:str, record: UploadFile = File(...),  session: AsyncSession = Depends(get_async_session)):
+    '''
+        Save wav record to mp3
+    '''
     try:
+        print("Validate")
         return await save_record_rep(login, token, record, session)
     except ValueError as e:
         raise HTTPException(status_code=404 , detail=e.args[0])

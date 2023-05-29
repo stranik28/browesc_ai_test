@@ -19,7 +19,7 @@ async def save_record(login: str, token:str, record: UploadFile, session: AsyncS
         raise ValueError("User with this login and token not found")
     
     username = user.username
-    audio = AudioSegment.from_wav(record.file, format="wav")
+    audio = AudioSegment.from_wav(record.file)
     name = str(uuid4())
     audio.export(f"record/{name}.mp3", format="mp3")
     record = Record(uuid=name, user=login)

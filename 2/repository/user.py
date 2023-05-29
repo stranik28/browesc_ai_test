@@ -5,7 +5,7 @@ from uuid import uuid4
 
 async def generate_unique_login(username:str) -> str:
     unique_id = uuid4().hex
-    return f"{username}_{unique_id[:15]}"
+    return f"{username}-{unique_id[:15]}"
 
 async def create_user(username: str, session: AsyncSession) -> UserSchema:
     token = str(uuid4())

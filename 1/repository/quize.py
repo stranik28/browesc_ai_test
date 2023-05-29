@@ -28,7 +28,7 @@ async def save_quize(session: AsyncSession, req) -> int:
     for i in req:
         in_db = await session.execute(select(Quize).where(Quize.id == i["id"]))
         in_db = in_db.scalars().first()
-        if not in_db:
+        if in_db:
             dublicate += 1
             continue
         quize = QuizeSchema(**i)
