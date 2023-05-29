@@ -1,0 +1,33 @@
+version: '3.0'
+
+services:
+    db:
+      image: postgres
+      restart: unless-stopped
+      ports:
+        - "5432:5432"
+      env_file:
+        - .env
+      networks:
+        - backend
+      volumes:
+        - ./data/:/var/lib/postgresql/data
+        
+    back-web:
+      build: .
+      restart: always
+      ports:
+        - "8000:8000"
+      networks:
+        - backend
+      depends_on:
+        db:
+          condition: service_started
+      volumes:
+        - .:/app
+
+networks:
+  backend:
+    name: backend
+volumes:
+  db_data:
